@@ -1,0 +1,82 @@
+# PRD: 부동산 뉴스 RSS 요약 시스템
+
+## 목적
+부동산 관련 최신 뉴스를 자동으로 수집하고 OpenAI GPT API를 활용해 요약한 뒤, 
+"오늘의 Top 5 이슈" 형태로 출력하는 프로그램을 제작한다.  
+
+## 기능 요구사항
+1. **RSS 피드 수집**
+   - 대상 RSS 주소: `https://www.mk.co.kr/rss/50300009/`
+   - RSS에서 각 기사별 `title`과 `description`을 추출한다.
+
+2. **텍스트 병합**
+   - 각 기사별 `title`과 `description`을 합쳐 하나의 텍스트로 만든다.
+   - 예: `[제목] + " " + [설명]`
+
+3. **GPT API 요청**
+   - 병합된 기사 텍스트를 OpenAI GPT API에 전달한다.
+   - GPT에게 "기사를 요약하라"는 프롬프트를 사용한다.
+
+4. **Top 5 이슈 선정**
+   - 수집된 기사들 중에서 GPT가 요약한 내용을 바탕으로 주요 5개 이슈를 선정한다.
+   - 출력 형식:
+     ```
+     오늘의 부동산 Top 5 이슈
+     1. ...
+     2. ...
+     3. ...
+     4. ...
+     5. ...
+     ```
+
+## 비기능 요구사항
+- **언어**: Python 3.9+
+- **라이브러리**
+  - `feedparser`: RSS 피드 파싱
+  - `openai`: GPT API 요청
+- **실행 환경**: CLI 기반 실행
+- **출력 형식**: 콘솔에 텍스트 출력
+- **성능**: 5초 이내 결과 출력 (네트워크 응답 속도 제외)
+
+## 예시 코드 스니펫
+
+```python
+import feedparser
+from openai import OpenAI
+
+# OpenAI API 키 설정
+client = OpenAI(api_key="YOUR_API_KEY")
+
+# RSS 피드 URL
+rss_url = "https://www.mk.co.kr/rss/50300009/"
+feed = feedparser.parse(rss_url)
+
+# 기사 수집 및 텍스트 병합
+articles = []
+for entry in feed.entries[:10]:  # 최신 10개 기사만
+    title = entry.title
+    description = entry.description
+    text = f"{title}. {description}"
+    articles.append(text)
+
+# GPT 요청을 위한 프롬프트 생성
+prompt = (
+    "다음은 부동산 뉴스 기사들입니다.\n"
+    "각 기사를 요약하고 오늘의 주요 Top 5 이슈로 정리해주세요.\n\n"
+)
+for i, article in enumerate(articles, 1):
+    prompt += f"{i}. {article}\n"
+
+# GPT API 호출
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "너는 뉴스 요약 전문가야."},
+        {"role": "user", "content": prompt},
+    ],
+    temperature=0.7,
+)
+
+# 요약 결과 출력
+print("오늘의 부동산 Top 5 이슈\n")
+print(response.choices[0].message.content.strip())
