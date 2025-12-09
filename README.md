@@ -14,7 +14,7 @@ Inflearn "[입문반] 핵심 파이썬 with Cursor" 강의 Repository 입니다.
 
 <br>
 
-- **강의 링크**: [[입문반] 핵심 파이썬 with Cursor](https://www.inflearn.com/course/%ED%95%B5%EC%8B%AC-%ED%8C%8C%EC%9D%B4%EC%8D%AC-cursor)
+- **강의 링크**: [[입문반] 핵심 파이썬 with Cursor](https://www.inflearn.com/course/%ED%95%B5%EC%8B%AC-%ED%8C%8C%EC%9D%B4%EC%8D%AC-cursor/dashboard)
 - **강사**: [Joe (브리쳐스)](https://www.inflearn.com/users/174721/@breachers)
 - **카테고리**: 개발·프로그래밍 / 프로그래밍 언어
 - **태그**: `#파이썬입문`, `#Python`, `#인공지능(AI)`, `#ChatGPT`, `#cursor`
