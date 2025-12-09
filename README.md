@@ -2,6 +2,8 @@
 
 Inflearn "[입문반] 핵심 파이썬 with Cursor" 강의 Repository 입니다.
 
+<br>
+
 ---
 
 <br>
@@ -19,6 +21,8 @@ Inflearn "[입문반] 핵심 파이썬 with Cursor" 강의 Repository 입니다.
 - **커리쿨럼**: 수업 32개, 미션 3개
 - **강의 시간**: 3시간 34분
 - **난이도**: 입문
+
+<br>
 
 ---
 
